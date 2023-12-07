@@ -1,22 +1,13 @@
 using NUnit;
 using NUnit.Framework;
 using System;
-
-public class DayOne
+namespace Advent2023
 {
-    public DayOne()
+    public class DayOne
     {
-        Input = string.Empty;
-    }
-    public string Input {get;set;}
-    internal int GetLineValue(string v)
-    {        
-        var  last = v.Reverse().First(x=>char.IsDigit(x));
-        var first = v.First(x=>char.IsDigit(x));
-        return 10*first + last;
-    }
-    public void RunIt(){
-        Input = @"9vxfg
+        public DayOne()
+        {
+            Input = @"9vxfg
 19qdlpmdrxone7sevennine
 1dzntwofour9nineffck
 7bx8hpldgzqjheight
@@ -1017,18 +1008,26 @@ two4dddpmrhh7fourthreeeight9
 slhdsxngfxszspppxxfftmxlptzhtwovp1
 4vmzcrhtdvnm6zfive5pkbhcxj";
 
-    }
-}
+        }
+        public string Input { get; set; }
+        public int GetLineValue(string v)
+        {
+            var last = int.Parse(v.Reverse().First(x => char.IsDigit(x)).ToString());
+            var first = int.Parse(v.First(x => char.IsDigit(x)).ToString());
+            return 10 * first + last;
+        }
+        public int RunIt()
+        {
 
-
-public class DayOneTest()
-{
-    [Test]
-    public void TestLineGather()
-    {
-        DayOne d = new DayOne();
-        
-        int lineValue = d.GetLineValue("a8d0e9d8ddfeae");
-        Assert.Equals(lineValue, 88);
+            StringReader reader = new StringReader(Input);
+            int total = 0;
+            while (reader.Peek() != -1)
+            {
+                var line = reader.ReadLine();
+                if (!string.IsNullOrWhiteSpace(line))
+                    total += GetLineValue(line);
+            }
+            return total;
+        }
     }
 }
